@@ -6,9 +6,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Movie
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,7 +31,8 @@ import com.alilopez.demo.features.jsonplaceholder.presentation.viewmodels.JsonPl
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun JsonPlaceHolderScreen(
-    viewModel: JsonPlaceHolderViewModel = hiltViewModel()
+    viewModel: JsonPlaceHolderViewModel = hiltViewModel(),
+    onNavigateToMovies: () -> Unit  // ← callback de navegación
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -35,7 +40,15 @@ fun JsonPlaceHolderScreen(
         modifier = Modifier.fillMaxSize(),
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text("Rick & Morty", fontWeight = FontWeight.ExtraBold) }
+                title = { Text("Json Place Holder", fontWeight = FontWeight.ExtraBold) },
+                actions = {
+                    IconButton(onClick = onNavigateToMovies) {
+                        Icon(
+                            imageVector = Icons.Default.Movie,
+                            contentDescription = "Go to Movies"
+                        )
+                    }
+                }
             )
         }
     ) { innerPadding ->
